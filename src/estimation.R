@@ -30,6 +30,9 @@ derivate <- function(x, y, smoothing=1) {
 # Classical MDS
 # N rows (objects) x p columns (variables)
 # each row identified by a unique row name
+
+# https://www.statmethods.net/advstats/mds.html
+
 classical_MDS <- function(X, s) {
   d <- dist(X) # euclidean distances between the rows
   mds <- cmdscale(d, eig=TRUE, k=2) # k is the number of dim
