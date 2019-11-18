@@ -56,3 +56,7 @@ classical_MDS <- function(X, s) {
   # Data-driven lattice
 
     # Locally linear embedding
+
+  # ISOMAP
+
+  # KRUSKAL
