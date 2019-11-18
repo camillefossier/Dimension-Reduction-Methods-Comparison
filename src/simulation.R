@@ -25,7 +25,7 @@ spiral <- function(n, p=2, noise=0) {
   Z_spiral = Y * sin(Y)
   data = cbind(X, Y_spiral, Z_spiral, Y)
   data = addNoise(data, noise)
-  plot3d(data[,1], data[,2], data[,3], col=myColorRamp(data[,4]))  
+  return(data)
 }
 
 # n : Nombre de points
@@ -37,7 +37,14 @@ sphere <- function(n, noise=0) {
   Z = sin(B)
   data = cbind(X,Y,Z,A)
   data = addNoise(data, noise)
-  plot3d(data[,1], data[,2], data[,3], col=myColorRamp(data[,4]))
+  return(data)
+}
+
+waves <- function(n, a=1, b=1, c=1, d=1) {
+  X = runif(n, 0, 2*pi)
+  Y = runif(n, 0, 2*pi)
+  Z = a * sin(b * X) + c * sin(d * Y)
+  return(cbind(X, Y, Z, X))
 }
 
 ## 3-sensor data set ####

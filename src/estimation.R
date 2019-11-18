@@ -1,4 +1,4 @@
-source("simulation.R")
+source("src/simulation.R")
 
 #### Dimensionality Estimation ####
 
@@ -27,6 +27,23 @@ derivate <- function(x, y, smoothing=1) {
 
     # Metric MDS
 
+# Classical MDS
+# N rows (objects) x p columns (variables)
+# each row identified by a unique row name
+classical_MDS <- function(X, s) {
+  d <- dist(X) # euclidean distances between the rows
+  mds <- cmdscale(d, eig=TRUE, k=2) # k is the number of dim
+  print(mds) # view results
+  
+  # plot solution
+  x <- mds$points[,1]
+  y <- mds$points[,2]
+  plot(x, y, xlab="Coordinate 1", ylab="Coordinate 2",
+       main="Metric MDS", type="n")
+  text(x, y, labels = row.names(X), cex=.7)
+  
+  return(mds)
+}
   # Sammon's Nonlinear Mapping
 
   # Graph Distances

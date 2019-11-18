@@ -1,3 +1,6 @@
+source("src/simulation.R")
+source("src/estimation.R")
+
 #### Using PCA ####
 
 res100   <- generateData(100)
