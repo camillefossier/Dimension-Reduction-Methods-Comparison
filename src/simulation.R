@@ -19,7 +19,7 @@ addNoise <- function(data, value) {
 # n : Nombre de points
 # p : Nombre de tours
 spiral <- function(n, p=2, noise=0) {
-  X = runif(n)
+  X = runif(n, 0, 4 * pi * p)
   Y = runif(n, 0, 2 * pi * p)
   Y_spiral = Y * cos(Y)
   Z_spiral = Y * sin(Y)

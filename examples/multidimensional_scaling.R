@@ -1,13 +1,14 @@
 source("src/simulation.R")
 source("src/estimation.R")
 
-n = 1000
+n = 2000
 
 X <- generateData(n)
 classical_MDS(X, 3)
 
-spi = spiral(n, p=1)
-flat = classical_MDS(spi, 2)
+spi = spiral(n, p=2)
+plot3d(spi[,1], spi[,2], spi[,3], col=myColorRamp(spi[,4]), aspect=F)
+flat = classical_MDS(spi[,-4], 2)
 plot(flat$points[,1], flat$points[,2], col=myColorRamp(spi[,4]))
 
 sph = sphere(n)
