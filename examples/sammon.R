@@ -1,6 +1,8 @@
 source("src/simulation.R")
 source("src/estimation.R")
 
+n=1000
+
 spi = spiral(n, p=2)
 flat = sammon_NLM(spi[,-4], 2)
 plot(flat$points[,1], flat$points[,2], col=myColorRamp(spi[,4]))
