@@ -1,6 +1,7 @@
 source("src/simulation.R")
 
 library(MASS)
+library(vegan)
 
 #### Dimensionality Estimation ####
 
@@ -57,5 +58,10 @@ sammon_NLM <- function(X, s) {
     # Locally linear embedding
 
   # ISOMAP
+
+isomap_ML <- function(X, s, k) {
+  d <- dist(X)
+  isomap(d, ndim = s, k = k)
+}
 
   # KRUSKAL
