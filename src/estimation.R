@@ -2,6 +2,7 @@ source("src/simulation.R")
 
 library(MASS)
 library(vegan)
+library(lle)
 
 #### Dimensionality Estimation ####
 
@@ -53,15 +54,19 @@ sammon_NLM <- function(X, s) {
 
     # Geodesic Graph Distance
 
-  # Data-driven lattice
-
-    # Locally linear embedding
-
   # ISOMAP
 
 isomap_ML <- function(X, s, k) {
   d <- dist(X)
   isomap(d, ndim = s, k = k)
+}
+
+# Data-driven lattice
+
+# Locally linear embedding
+
+LLE_ML <- function(X, s, k) {
+  lle(X, s, k)
 }
 
   # KRUSKAL
