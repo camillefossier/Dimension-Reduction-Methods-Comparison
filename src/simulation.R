@@ -26,7 +26,7 @@ spiral <- function(n, p=2, noise=0) {
   data = cbind(X, Y_spiral, Z_spiral)
   data = addNoise(data, noise)
   data = cbind(data, Y)
-  manifold = cbind(X, Y)
+  manifold = cbind(X, Y, Y)
   return(list(data=data, manifold=manifold))
 }
 
@@ -40,7 +40,7 @@ sphere <- function(n, noise=0) {
   data = cbind(X,Y,Z)
   data = addNoise(data, noise)
   data = cbind(data, A)
-  manifold = cbind(A, B)
+  manifold = cbind(A, B, A)
   return(list(data=data, manifold=manifold))
 }
 
@@ -51,7 +51,7 @@ waves <- function(n, a=1, b=1, c=1, d=1, noise=0) {
   data = cbind(X, Y, Z)
   data = addNoise(data, noise)
   data = cbind(data, X)
-  manifold = cbind(X, Y)
+  manifold = cbind(X, Y, X)
   return(list(data=data, manifold=manifold))
 }
 
