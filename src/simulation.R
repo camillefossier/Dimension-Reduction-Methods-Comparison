@@ -23,9 +23,11 @@ spiral <- function(n, p=2, noise=0) {
   Y = runif(n, 0, 2 * pi * p)
   Y_spiral = Y * cos(Y)
   Z_spiral = Y * sin(Y)
-  data = cbind(X, Y_spiral, Z_spiral, Y)
+  data = cbind(X, Y_spiral, Z_spiral)
   data = addNoise(data, noise)
-  return(data)
+  data = cbind(data, Y)
+  manifold = cbind(X, Y)
+  return(list(data=data, manifold=manifold))
 }
 
 # n : Nombre de points
@@ -35,21 +37,27 @@ sphere <- function(n, noise=0) {
   X = cos(A) * cos(B)
   Y = sin(A) * cos(B)
   Z = sin(B)
-  data = cbind(X,Y,Z,A)
+  data = cbind(X,Y,Z)
   data = addNoise(data, noise)
-  return(data)
+  data = cbind(data, A)
+  manifold = cbind(A, B)
+  return(list(data=data, manifold=manifold))
 }
 
-waves <- function(n, a=1, b=1, c=1, d=1) {
+waves <- function(n, a=1, b=1, c=1, d=1, noise=0) {
   X = runif(n, 0, 2*pi)
   Y = runif(n, 0, 2*pi)
   Z = a * sin(b * X) + c * sin(d * Y)
-  return(cbind(X, Y, Z, X))
+  data = cbind(X, Y, Z)
+  data = addNoise(data, noise)
+  data = cbind(data, X)
+  manifold = cbind(X, Y)
+  return(list(data=data, manifold=manifold))
 }
 
 ## 3-sensor data set ####
 ## Artificial data as from P. Desmartines, PhD Tesis 1994
-generateData <- function(n) {
+data_10D <- function(n, noise=0) {
   
   # these sensors where selected randomly
   sensors <- matrix(ncol = 3, data = 
@@ -58,11 +66,11 @@ generateData <- function(n) {
                         0.026, -0.913, -0.700, 0.876, 0.216, -0.739, 0.556, -0.155, 0.431, 0.411))
   
   # draw random points on the 3d unit cube
-  unitcube <- matrix(runif(3 * n, -1, 1), ncol = 3)
+  manifold <- matrix(runif(3 * n, -1, 1), ncol = 3)
   
   # We ode each point as the distance to sensors : intrinsic dimension = 3
   # while extrinsic dimension = 10
-  X <- as.matrix(pdist(unitcube, sensors))
-  noise <- matrix(rnorm(ncol(X) * nrow(X), sd = .01), ncol = ncol(X))
-  return(X + noise)
+  data <- as.matrix(pdist(manifold, sensors))
+  data <- addNoise(data, noise)
+  return(list(data=data, manifold=manifold))
 }
