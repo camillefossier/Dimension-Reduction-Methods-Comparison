@@ -50,11 +50,11 @@ compare <- function(high, lows, K, legend) {
     conti = cbind(conti, unlist(lapply(K, function(k) trustworthiness(high, low, k))))
   }
   layout(t(c(1,2)))
-  matplot(K, trust, type ="b", pch=1, col=seq_along(K))
-  legend("bottomright", legend=legend, col=seq_along(K), pch=1) # optional legend
+  matplot(K, trust, type="l", lty=1, lwd=2, col=seq_along(lows))
+  legend("bottomright", legend=legend, col=seq_along(lows), pch=1) # optional legend
   
-  matplot(K, conti, type ="b", pch=1, col=seq_along(K))
-  legend("bottomright", legend=legend, col=seq_along(K), pch=1) # optional legend
+  matplot(K, conti, type="l", lty=1, lwd=2, col=seq_along(lows))
+  legend("bottomright", legend=legend, col=seq_along(lows), pch=1) # optional legend
   
   list(trustworthiness=trust, continuity=conti)
 }

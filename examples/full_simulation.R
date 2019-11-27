@@ -18,5 +18,12 @@ lows = list(
   iso=iso$points,
   lle=lle$Y
 )
+legend = c(
+  "MDS",
+  "Sammon",
+  "Isomap",
+  "LLE"
+)
 
-comp = compare(spi$data[,-4], lows, seq(from=1, to=10))
+K=seq.int(from=1, to=10, length.out=2)
+comp = compare(spi$data[,-4], lows, K, legend)
