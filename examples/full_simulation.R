@@ -25,5 +25,5 @@ legend = c(
   "LLE"
 )
 
-K=seq.int(from=1, to=10, length.out=2)
+K=seq.int(from=1, to=300, length.out=20)
 comp = compare(spi$data[,-4], lows, K, legend)

@@ -47,7 +47,7 @@ compare <- function(high, lows, K, legend) {
   conti = matrix(NA, nrow=length(K), ncol=0)
   for (low in lows) {
     trust = cbind(trust, unlist(lapply(K, function(k) trustworthiness(high, low, k))))
-    conti = cbind(conti, unlist(lapply(K, function(k) trustworthiness(high, low, k))))
+    conti = cbind(conti, unlist(lapply(K, function(k) continuity(high, low, k))))
   }
   layout(t(c(1,2)))
   matplot(K, trust, type="l", lty=1, lwd=2, col=seq_along(lows))
