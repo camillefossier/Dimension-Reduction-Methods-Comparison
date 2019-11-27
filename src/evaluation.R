@@ -1,3 +1,5 @@
+source("src/estimation.R")
+
 trustworthiness <- function(high, low, k) {
   n = nrow(high)
   # distances des points à i en faible dimension
@@ -40,3 +42,19 @@ continuity <- function(high, low, k) {
   1 - 2 * continuity / (n*k * (2*n - 3*k - 1))
 }
 
+compare <- function(high, lows, K, legend) {
+  trust = matrix(NA, nrow=length(K), ncol=0)
+  conti = matrix(NA, nrow=length(K), ncol=0)
+  for (low in lows) {
+    trust = cbind(trust, unlist(lapply(K, function(k) trustworthiness(high, low, k))))
+    conti = cbind(conti, unlist(lapply(K, function(k) trustworthiness(high, low, k))))
+  }
+  layout(t(c(1,2)))
+  matplot(K, trust, type ="b", pch=1, col=seq_along(K))
+  legend("bottomright", legend=legend, col=seq_along(K), pch=1) # optional legend
+  
+  matplot(K, conti, type ="b", pch=1, col=seq_along(K))
+  legend("bottomright", legend=legend, col=seq_along(K), pch=1) # optional legend
+  
+  list(trustworthiness=trust, continuity=conti)
+}
