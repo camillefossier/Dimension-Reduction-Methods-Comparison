@@ -44,9 +44,6 @@ for (l in seq_along(lows)) {
 
 # Evaluation #
 
-K=seq.int(from=1, to=300, length.out=20)
-Rprof()
+K=seq.int(from=1, to=400, length.out=30)
 comp = compare(high, lows, K)
-Rprof(NULL)
-summaryRprof()
 plot_compare(comp, legend)
