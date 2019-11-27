@@ -1,17 +1,19 @@
 source("src/estimation.R")
 
-trustworthiness <- function(high, low, k) {
+trustworthiness <- function(high, low, k, dh=NULL, dl=NULL, order=T) {
   n = nrow(high)
   # distances des points à i en faible dimension
-  dl = as.matrix(dist(low))
+  if (is.null(dl)) dl = as.matrix(dist(low))
   # distances des points à i en haute dimension
-  dh = as.matrix(dist(high))
+  if (is.null(dh)) dh = as.matrix(dist(high))
   trustworthiness = 0
   for (i in 1:n) {
     # indices des points proches en faible dimension
-    ol = order(dl[,i])
+    ol = dl[,i]
+    if (order) ol = order(ol)
     # indice des points proches en hautes dimensions
-    oh = order(dh[,i])
+    oh = dh[,i]
+    if (order) oh = order(oh)
     u = setdiff(ol[1:(k+1)], oh[1:(k+1)])
     for (j in u) {
       
@@ -22,18 +24,20 @@ trustworthiness <- function(high, low, k) {
   1 - 2 * trustworthiness / (n*k * (2*n - 3*k - 1))
 }
 
-continuity <- function(high, low, k) {
+continuity <- function(high, low, k, dh=NULL, dl=NULL, order=T) {
   n = nrow(high)
   # distances des points à i en faible dimension
-  dl = as.matrix(dist(low))
+  if (is.null(dl)) dl = as.matrix(dist(low))
   # distances des points à i en haute dimension
-  dh = as.matrix(dist(high))
+  if (is.null(dh)) dh = as.matrix(dist(high))
   continuity = 0
   for (i in 1:n) {
     # indices des points proches en faible dimension
-    ol = order(dl[,i])
+    ol = dl[,i]
+    if (order) ol = order(ol)
     # indice des points proches en hautes dimensions
-    oh = order(dh[,i])
+    oh = dh[,i]
+    if (order) oh = order(oh)
     u = setdiff(oh[1:(k+1)], ol[1:(k+1)])
     for (j in u) {
       continuity = continuity + (j - k)
@@ -45,9 +49,13 @@ continuity <- function(high, low, k) {
 compare <- function(high, lows, K) {
   trust = matrix(NA, nrow=length(K), ncol=0)
   conti = matrix(NA, nrow=length(K), ncol=0)
+  dh = as.matrix(dist(high))
+  dh = apply(dh, 2, order)
   for (low in lows) {
-    trust = cbind(trust, unlist(lapply(K, function(k) trustworthiness(high, low, k))))
-    conti = cbind(conti, unlist(lapply(K, function(k) continuity(high, low, k))))
+    dl = as.matrix(dist(low))
+    dl = apply(dl, 2, order)
+    trust = cbind(trust, unlist(lapply(K, function(k) trustworthiness(high, low, k, dh=dh, dl=dl, order=F))))
+    conti = cbind(conti, unlist(lapply(K, function(k) continuity(high, low, k, dh=dh, dl=dl, order=F))))
   }
   
   list(trustworthiness=trust, continuity=conti)
