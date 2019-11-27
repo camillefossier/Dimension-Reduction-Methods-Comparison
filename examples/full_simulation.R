@@ -43,4 +43,5 @@ for (l in seq_along(lows)) {
 }
 
 K=seq.int(from=1, to=300, length.out=20)
-comp = compare(high, lows, K, legend)
+comp = compare(high, lows, K)
+plot_compare(comp, legend)

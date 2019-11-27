@@ -42,19 +42,22 @@ continuity <- function(high, low, k) {
   1 - 2 * continuity / (n*k * (2*n - 3*k - 1))
 }
 
-compare <- function(high, lows, K, legend) {
+compare <- function(high, lows, K) {
   trust = matrix(NA, nrow=length(K), ncol=0)
   conti = matrix(NA, nrow=length(K), ncol=0)
   for (low in lows) {
     trust = cbind(trust, unlist(lapply(K, function(k) trustworthiness(high, low, k))))
     conti = cbind(conti, unlist(lapply(K, function(k) continuity(high, low, k))))
   }
-  layout(t(c(1,2)))
-  matplot(K, trust, type="l", lty=1, lwd=2, col=seq_along(lows))
-  legend("bottomright", legend=legend, col=seq_along(lows), pch=1) # optional legend
-  
-  matplot(K, conti, type="l", lty=1, lwd=2, col=seq_along(lows))
-  legend("bottomright", legend=legend, col=seq_along(lows), pch=1) # optional legend
   
   list(trustworthiness=trust, continuity=conti)
+}
+
+plot_compare <- function(compare, legend) {
+  layout(t(c(1,2)))
+  matplot(K, compare$trustworthiness, type="l", lty=1, lwd=2, col=seq_along(lows))
+  legend("bottomright", legend=legend, col=seq_along(lows), pch=1) # optional legend
+  
+  matplot(K, compare$continuity, type="l", lty=1, lwd=2, col=seq_along(lows))
+  legend("bottomright", legend=legend, col=seq_along(lows), pch=1) # optional legend
 }
