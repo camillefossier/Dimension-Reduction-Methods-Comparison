@@ -42,6 +42,8 @@ for (l in seq_along(lows)) {
   plot(lows[[l]][,1], lows[[l]][,2], col=myColorRamp(value), sub=legend[l], xlab="x", ylab="y")
 }
 
+# Evaluation #
+
 K=seq.int(from=1, to=300, length.out=20)
 comp = compare(high, lows, K)
 plot_compare(comp, legend)
