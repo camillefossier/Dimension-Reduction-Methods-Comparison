@@ -1,24 +1,42 @@
-trustworthiness <- function(data, manifold, k) {
-  n = nrow(data)
-  trust = 0
+trustworthiness <- function(high, low, k) {
+  n = nrow(high)
   # distances des points à i en faible dimension
-  d_m = as.matrix(dist(manifold))
+  dl = as.matrix(dist(low))
   # distances des points à i en haute dimension
-  d_d = as.matrix(dist(data))
+  dh = as.matrix(dist(high))
+  trustworthiness = 0
   for (i in 1:n) {
-    d_m_i = d_m[,i]
-    d_d_i = d_d[,i]
     # indices des points proches en faible dimension
-    o_m = order(d_m)
+    ol = order(dl[,i])
     # indice des points proches en hautes dimensions
-    o_d = order(d_d)
-    u = setdiff(o_m[1:(k+1)], o_d[1:(k+1)])
-    if (length(u)>0) print(u)
+    oh = order(dh[,i])
+    u = setdiff(ol[1:(k+1)], oh[1:(k+1)])
     for (j in u) {
       
-      trust = trust + (j - k)
+      trustworthiness = trustworthiness + (j - k)
       
     }
   }
-  trust
+  1 - 2 * trustworthiness / (n*k * (2*n - 3*k - 1))
 }
+
+continuity <- function(high, low, k) {
+  n = nrow(high)
+  # distances des points à i en faible dimension
+  dl = as.matrix(dist(low))
+  # distances des points à i en haute dimension
+  dh = as.matrix(dist(high))
+  continuity = 0
+  for (i in 1:n) {
+    # indices des points proches en faible dimension
+    ol = order(dl[,i])
+    # indice des points proches en hautes dimensions
+    oh = order(dh[,i])
+    u = setdiff(oh[1:(k+1)], ol[1:(k+1)])
+    for (j in u) {
+      continuity = continuity + (j - k)
+    }
+  }
+  1 - 2 * continuity / (n*k * (2*n - 3*k - 1))
+}
+
