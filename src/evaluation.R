@@ -63,9 +63,9 @@ compare <- function(high, lows, K) {
 
 plot_compare <- function(compare, legend) {
   layout(t(c(1,2)))
-  matplot(K, compare$trustworthiness, type="l", lty=1, lwd=2, col=seq_along(lows))
+  matplot(K, compare$trustworthiness, type="l", lty=1, lwd=2, col=seq_along(lows), xlab="Neighbors", ylab="Trustworthiness")
   legend("bottomright", legend=legend, col=seq_along(lows), pch=1) # optional legend
   
-  matplot(K, compare$continuity, type="l", lty=1, lwd=2, col=seq_along(lows))
+  matplot(K, compare$continuity, type="l", lty=1, lwd=2, col=seq_along(lows), xlab="Neighbors", ylab="Continuity")
   legend("bottomright", legend=legend, col=seq_along(lows), pch=1) # optional legend
 }
