@@ -3,6 +3,7 @@ source("src/simulation.R")
 library(MASS)
 library(vegan)
 library(lle)
+library(FactoMineR)
 
 #### Dimensionality Estimation ####
 

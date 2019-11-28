@@ -58,14 +58,15 @@ compare <- function(high, lows, K) {
     conti = cbind(conti, unlist(lapply(K, function(k) continuity(high, low, k, dh=dh, dl=dl, order=F))))
   }
   
-  list(trustworthiness=trust, continuity=conti)
+  list(trustworthiness=trust, continuity=conti, K=K)
 }
 
 plot_compare <- function(compare, legend) {
+  K=compare$K
   layout(t(c(1,2)))
-  matplot(K, compare$trustworthiness, type="l", lty=1, lwd=2, col=seq_along(lows), xlab="Neighbors", ylab="Trustworthiness")
-  legend("bottomright", legend=legend, col=seq_along(lows), pch=1) # optional legend
+  matplot(K, compare$trustworthiness, type="l", lty=1, lwd=2, col=seq_along(legend), xlab="Neighbors", ylab="Trustworthiness")
+  legend("bottomright", legend=legend, col=seq_along(legend), pch=1) # optional legend
   
-  matplot(K, compare$continuity, type="l", lty=1, lwd=2, col=seq_along(lows), xlab="Neighbors", ylab="Continuity")
-  legend("bottomright", legend=legend, col=seq_along(lows), pch=1) # optional legend
+  matplot(K, compare$continuity, type="l", lty=1, lwd=2, col=seq_along(legend), xlab="Neighbors", ylab="Continuity")
+  legend("bottomright", legend=legend, col=seq_along(legend), pch=1) # optional legend
 }
