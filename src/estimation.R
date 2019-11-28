@@ -4,6 +4,7 @@ library(MASS)
 library(vegan)
 library(lle)
 library(FactoMineR)
+library(kernlab)
 
 #### Dimensionality Estimation ####
 
@@ -72,6 +73,10 @@ isomap_ML <- function(X, s, k) {
 
 LLE_ML <- function(X, s, k) {
   lle(X, s, k)
+}
+
+KPCA_ML <- function(X, s, sigma) {
+  rotated(kpca(X, kernel = "rbfdot", kpar = list(sigma = sigma)))[,1:s]
 }
 
   # KRUSKAL
