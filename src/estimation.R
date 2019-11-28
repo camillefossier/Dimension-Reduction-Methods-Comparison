@@ -9,6 +9,10 @@ library(FactoMineR)
 
   # PCA : See examples/dimensionality_estimation.R (using prcomp for PCA)
 
+PCA_ML <- function(high, s) {
+  predict(PCA(high), high)$coord[,1:s]
+}
+
   # Correlation dimension, Grassberger and Procaccia (case where q=2)
 
 corrDim <- function(data, epsilon = 10^seq(-2, 1, length.out = 100)){

@@ -10,14 +10,14 @@ full_comparison <- function(high) {
   sam = sammon_NLM(high, 2)
   iso = isomap_ML(high, 2, 7)
   lle = LLE_ML(high, 2, 13)
-  pca = predict(PCA(high), high)
+  pca = PCA_ML(high, 2)
   
   lows = list(
     mds=mds$points,
     sam=sam$points,
     iso=iso$points,
     lle=lle$Y,
-    pca=pca$coord[,1:2]
+    pca=pca
   )
   
   legend = c(
