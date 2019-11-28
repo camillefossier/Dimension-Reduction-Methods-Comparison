@@ -4,7 +4,7 @@ source("src/evaluation.R")
 
 n=1000
 
-spi = spiral(n, p=2, noise=2)
+spi = spiral(n, p=2)
 plot3d(spi$data[,1], spi$data[,2], spi$data[,3], col=myColorRamp(spi$data[,4]), aspect=F)
 
 # Predict #
