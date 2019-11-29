@@ -15,13 +15,12 @@ trustworthiness <- function(high, low, k, dh=NULL, dl=NULL, order=T) {
     oh = dh[,i]
     if (order) oh = order(oh)
     u = setdiff(ol[1:(k+1)], oh[1:(k+1)])
+    u = unlist(lapply(u, function(i) which(ol[1:(k+1)]==i)))-1
     for (j in u) {
-      
       trustworthiness = trustworthiness + (j - k)
-      
     }
   }
-  1 - 2 * trustworthiness / (n*k * (2*n - 3*k - 1))
+  1 - ((2 / (n*k * (2*n - 3*k - 1))) * trustworthiness)
 }
 
 continuity <- function(high, low, k, dh=NULL, dl=NULL, order=T) {
@@ -39,6 +38,7 @@ continuity <- function(high, low, k, dh=NULL, dl=NULL, order=T) {
     oh = dh[,i]
     if (order) oh = order(oh)
     u = setdiff(oh[1:(k+1)], ol[1:(k+1)])
+    u = unlist(lapply(u, function(i) which(oh[1:(k+1)]==i)))-1
     for (j in u) {
       continuity = continuity + (j - k)
     }
