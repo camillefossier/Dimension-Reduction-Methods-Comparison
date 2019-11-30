@@ -18,8 +18,14 @@ plot(flat$points[,1], flat$points[,2], col=myColorRamp(spi$data[,4]))
 # Sphere
 
 sph = sphere(n)
-flat = isomap_ML(sph$data[,-4], 2, 4)
-plot(flat$points[,1], flat$points[,2], col=myColorRamp(sph$data[,4]))
+flats = lapply(4:9, function(i) {
+  print(i)
+  isomap_ML(sph$data[,-4], 2, i)
+})
+layout(matrix(c(1,2,3,4,5,6), 2, 3))
+for (flat in flats) {
+  plot(flat$points[,1], flat$points[,2], col=myColorRamp(sph$data[,4]))
+}
 
 wav = waves(n)
 flat = isomap_ML(wav$data[,-4], 2, 10)

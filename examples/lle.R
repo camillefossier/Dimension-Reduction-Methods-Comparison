@@ -18,8 +18,15 @@ plot(flat$Y[,1], flat$Y[,2], col=myColorRamp(spi$data[,4]))
 # Sphere
 
 sph = sphere(n)
-flat = LLE_ML(sph$data[,-4], 2, 8)
-plot(flat$Y[,1], flat$Y[,2], col=myColorRamp(sph$data[,4]))
+flats = lapply(4:19, function(i) {
+  print(i)
+  LLE_ML(sph$data[,-4], 2, i)
+})
+layout(matrix(1:16, 4, 4))
+for (flat in flats) {
+  plot(flat$Y[,1], flat$Y[,2], col=myColorRamp(sph$data[,4]))
+}
+
 
 wav = waves(n)
 flat = LLE_ML(wav$data[,-4], 2, 10)
