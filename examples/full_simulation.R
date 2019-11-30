@@ -33,7 +33,7 @@ full_comparison <- function(high, s, k_lle, k_iso, sig_kpca) {
   
   # Evaluation #
   
-  K=seq.int(from=1, to=100, length.out=20)
+  K=seq.int(from=1, to=400, length.out=10)
   comp = compare(high, lows, K)
   
   list(
@@ -43,7 +43,7 @@ full_comparison <- function(high, s, k_lle, k_iso, sig_kpca) {
   )
 }
 
-n=100
+n=1000
 
 # SPIRAL #
 
