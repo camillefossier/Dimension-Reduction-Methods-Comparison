@@ -43,7 +43,7 @@ full_comparison <- function(high, s, k_lle, k_iso, sig_kpca, trust_K = seq.int(f
   )
 }
 
-n=100
+n=1000
 
 # SPIRAL #
 
