@@ -85,7 +85,7 @@ plot_compare(f$comparison, f$legend)
 
 library("jpeg")
 
-folder = ".../faces"
+folder = "../faces"
 
 flatten <- function(img) {
   return(c(img))
@@ -103,11 +103,14 @@ remove_doubles <- function(mat) {
   mat[-to_remove,]
 }
 
-images = c()
-for (i in list.files(folder)) {
+images = unlist(lapply(list.files(folder), function(i) {
   img = flatten(readJPEG(paste(c(folder, i), collapse="/")))
-  images = rbind(images, img)
-}
+  complete = max(0, 128*128 - length(img))
+  c(img, rep(0, complete))
+  }))
+images = matrix(images, nrow=length(list.files(folder)))
+
 images=remove_doubles(images)
-f = full_comparison(images, 5, k_iso=20, k_lle=12, sig_kpca=1e-4, trust_K=seq(from=1, to=75, length.out=50))
-plot_compare(f$comparison, f$legend)
+f = full_comparison(images, 5, k_iso=20, k_lle=12, sig_kpca=1e-4, trust_K=seq(from=1, to=500, length.out=20))
+comp = compare(images, f$lows, seq(from=1, to=300, length.out=20))
+plot_compare(comp, f$legend)
