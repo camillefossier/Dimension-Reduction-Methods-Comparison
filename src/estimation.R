@@ -11,7 +11,11 @@ library(kernlab)
   # PCA : See examples/dimensionality_estimation.R (using prcomp for PCA)
 
 PCA_ML <- function(X, s) {
-  predict(PCA(X), X)$coord[,1:s]
+  pca = PCA(X, ncp=s)
+  #pre = predict(pca, X)
+  #coord = pre$coord
+  coord = pca$ind$coord
+  coord[,1:s]
 }
 
   # Correlation dimension, Grassberger and Procaccia (case where q=2)

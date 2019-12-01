@@ -2,7 +2,7 @@ source("src/simulation.R")
 source("src/estimation.R")
 source("src/evaluation.R")
 
-full_comparison <- function(high, s, k_lle, k_iso, sig_kpca) {
+full_comparison <- function(high, s, k_lle, k_iso, sig_kpca, trust_K = seq.int(from=1, to=400, length.out=20)) {
 
   # Predict #
   
@@ -33,7 +33,7 @@ full_comparison <- function(high, s, k_lle, k_iso, sig_kpca) {
   
   # Evaluation #
   
-  K=seq.int(from=1, to=400, length.out=20)
+  K=trust_K
   comp = compare(high, lows, K)
   
   list(
@@ -85,10 +85,22 @@ plot_compare(f$comparison, f$legend)
 
 library("jpeg")
 
-folder = "../faces"
+folder = ".../faces"
 
 flatten <- function(img) {
   return(c(img))
+}
+
+remove_doubles <- function(mat) {
+  d = as.matrix(dist(mat))
+  to_remove=c()
+  for (i in (nrow(d)-1):1) {
+    for (j in ncol(d):(i+1)) {
+      if (d[i,j]==0)
+        to_remove=c(to_remove, i)
+    }
+  }
+  mat[-to_remove,]
 }
 
 images = c()
@@ -96,5 +108,6 @@ for (i in list.files(folder)) {
   img = flatten(readJPEG(paste(c(folder, i), collapse="/")))
   images = rbind(images, img)
 }
-
-f = full_comparison(images, 20, k_iso=7, k_lle=13, sig_kpca=0.025)
+images=remove_doubles(images)
+f = full_comparison(images, 5, k_iso=20, k_lle=12, sig_kpca=1e-4, trust_K=seq(from=1, to=75, length.out=50))
+plot_compare(f$comparison, f$legend)
